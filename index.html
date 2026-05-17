@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- サイトのタイトル（ブラウザのタブに表示されます） -->
+    <title>東村山市廻田町自治会の活動紹介ブログ</title>
+    <!-- きれいなフォント（文字）をインターネットから読み込みます -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * ==========================================
+         * 1. サイト全体の色や背景の設定（CSS）
+         * ==========================================
+         */
+        body {
+            /* 全体の文字の形を指定 */
+            font-family: 'Noto Sans JP', sans-serif;
+            /* 背景を爽やかなグラデーション（緑から青系）にする */
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            /* スクロールしても背景が動かないようにする */
+            background-attachment: fixed;
+            /* ブラウザ特有の余白をなくす */
+            margin: 0;
+            padding: 0;
+            color: #333;
+            /* 行間を少し広くして読みやすくする */
+            line-height: 1.6;
+        }
+
+        /*
+         * ==========================================
+         * 2. 各パーツ（部品）のデザイン
+         * ==========================================
+         */
+
+        /* 真ん中にあるメインの白い箱（グラスモーフィズムという最近流行りのデザインです） */
+        .container {
+            max-width: 800px;
+            /* 箱の最大幅（これ以上広がりません） */
+            margin: 40px auto;
+            /* 左右の中央に配置 */
+            padding: 40px;
+            /* 箱の内側の余白 */
+
+            /* 背景を少し透明な白にする */
+            background: rgba(255, 255, 255, 0.7);
+            /* すりガラスのように後ろをぼかす */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            /* 角を丸くする */
+            border-radius: 20px;
+            /* 浮いているような影をつける */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* 白いふちどりをつける */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* 一番大きな見出し（自治会の名前など） */
+        h1 {
+            text-align: center;
+            /* 真ん中によせる */
+            color: #2c3e50;
+            /* 濃い青灰色 */
+            font-size: 2.5em;
+            /* 文字の大きさ */
+            margin-bottom: 10px;
+        }
+
+        /* 見出しの下のちょっとした説明文 */
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #8ec5fc;
+            /* 青い点線の下線 */
+        }
+
+        /* 次に大きな見出し（お知らせ、予定など） */
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            /* 左側に縦線をつけて見出しっぽくする */
+            border-left: 6px solid #8ec5fc;
+            padding-left: 15px;
+        }
+
+        /* お知らせ・予定などのリスト（箇条書き） */
+        .list-items {
+            list-style: none;
+            /* 先頭の点（・）を消す */
+            padding: 0;
+        }
+
+        /* リストの各項目（１行分） */
+        .list-items li {
+            background: rgba(255, 255, 255, 0.9);
+            /* 白い背景 */
+            margin-bottom: 15px;
+            /* 下のすきま */
+            padding: 15px 20px;
+            /* 内側のすきま */
+            border-radius: 10px;
+            /* 角をまるく */
+
+            /* マウスを乗せたときにふわっと動かすための設定 */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        /* マウスが上に乗ったときの変化 */
+        .list-items li:hover {
+            transform: translateY(-3px);
+            /* 3ピクセル上に浮く */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            /* 影を濃くする */
+        }
+
+        /* 日付のラベル */
+        .date-badge {
+            background: #8ec5fc;
+            /* 水色の背景 */
+            color: white;
+            /* 白文字 */
+            padding: 5px 12px;
+            border-radius: 20px;
+            /* 丸いバッジのようにする */
+            font-size: 0.85em;
+            font-weight: bold;
+            white-space: nowrap;
+            /* 日付が2行に割れないようにする */
+        }
+
+        .list-content {
+            flex: 1;
+            /* 余った幅をすべて使う */
+            margin-top: 2px;
+        }
+
+        /* 写真用のスペースのデザイン */
+        .news-image {
+            max-width: 100%;
+            /* はみ出さないようにする */
+            height: auto;
+            border-radius: 8px;
+            /* 写真の角を少し丸くする */
+            margin-top: 15px;
+            /* 写真の上のすきま */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            /* 写真に少し影をつける */
+        }
+
+        /* ★変更：過去のお知らせ（アーカイブ）を年度ごとに分けるためのデザイン */
+        .archive-box {
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 15px 20px;
+            border: 1px solid #e0c3fc;
+            /* うすい紫の枠 */
+        }
+
+        /* アーカイブを開閉するボタン部分 */
+        .archive-box summary {
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            /* マウスを乗せると手のマークになる */
+            padding: 5px 0;
+            font-size: 1.1em;
+        }
+
+        /* アーカイブが開いている時に、見出しの下に線を引く */
+        .archive-box[open] summary {
+            border-bottom: 2px solid #8ec5fc;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+
+        /* 活動と歴史ボックス */
+        .history-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #8ec5fc;
+            /* 水色のアクセントライン */
+            margin-bottom: 30px;
+        }
+
+        .history-box h3 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            border-bottom: 1px dashed #8ec5fc;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        .history-box ul {
+            line-height: 1.8;
+            padding-left: 20px;
+            color: #444;
+        }
+
+        /* 活動紹介用の写真スペース */
+        .activity-photo {
+            width: 100%;
+            max-width: 400px;
+            /* 写真の最大幅 */
+            height: 250px;
+            /* 写真の高さ */
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            /* 写真の角を少し丸くする */
+            background-color: #f5f5f5;
+            /* 写真が設定されていない場合の背景色 */
+            background-size: cover;
+            /* 枠のサイズに合わせて写真を自動調整 */
+            background-position: center;
+            /* 写真の真ん中を中心に表示 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            /* 少し影をつけて浮かせる */
+            /* もし写真がない時にわかりやすいように枠線をつける場合は以下のコメントを外してください */
+            /* border: 2px dashed #ccc; */
+        }
+
+        /* 
+         * 個別の写真設定（画像のURLを書き換えてください）
+         * パソコン内にある画像を使う場合は url('img/photo.jpg') のように指定します。
+         */
+        .photo-top {
+            /* トップページの写真（全体の紹介など） */
+            background-image: url('PXL_20260503_050620786.MP.jpg');
+        }
+
+        .photo-soukai {
+            /* 自治会定期総会の写真 */
+            background-image: url('PXL_20260201_054512176.MP-1-1.jpg');
+        }
+
+        .photo-matsuri {
+            /* 祭りの写真 */
+            background-image: url('DSC_0651_5-1.JPG');
+        }
+
+        .photo-undoukai {
+            /* 運動会の写真 */
+            background-image: url('PXL_20260517_024358658.MP.jpg');
+        }
+
+
+
+
+
+        /* おすすめスポットの横スクロール用コンテナ */
+        .horizontal-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+
+        /* スクロールバーのデザイン */
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background: #8ec5fc;
+            border-radius: 10px;
+        }
+
+        .horizontal-scroll-item {
+            flex: 0 0 85%;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            scroll-snap-align: start;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 連絡先ボックス */
+        .contact-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e0c3fc;
+            /* 紫色の枠線 */
+        }
+
+        .contact-box p {
+            margin: 10px 0;
+        }
+
+        /* フッター（ページの一番下） */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* 
+         * スマートフォンなど、画面が小さいときの調整 
+         */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .list-items li {
+                flex-direction: column;
+                /* スマホなら日付と文章を縦に並べる */
+                gap: 5px;
+            }
+        }
+
+        /* 訪問者数カウンター */
+        .visitor-counter {
+            text-align: right;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .visitor-counter img {
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 
+      ==========================================
+      3. ホームページの中身（文章の部分 / HTML）
+      ==========================================
+      ※ 〇〇の部分をご自身の自治会名に書き換えてください。
+    -->
+    <div class="container">
+
+        <!-- 訪問者カウンター -->
+        <div class="visitor-counter">
+            <span style="font-size: 1.2em;">👀 累計訪問者数: </span>
+            <div
+                style="display: inline-block; overflow: hidden; height: 20px; border-radius: 4px; vertical-align: middle; transform: scale(1.2); transform-origin: left center; margin-right: 15px;">
+                <img src="https://api.visitorbadge.io/api/visitors?path=higashimurayama_megurita_jichikai_2026_v2&countColor=%234caf50&labelColor=%234caf50"
+                    alt="訪問者数" style="margin-left: -75px; display: block; box-shadow: none;">
+            </div>
+        </div>
+
+        <!-- ヘッダー部分 -->
+        <h1>廻田町自治会の活動紹介ブログ</h1>
+        <div class="subtitle">このホームページは、廻田町自治会を盛り上げていくための非公式サイトです。</div>
+
+        <p>自治会に所属する管理人たくちゃんが、個人的に運営しております。
+        </p>
+        <p> このサイトの目的は、地域活動の拠点である廻田町自治会を紹介して、知ってもらうことにあります。
+            <br>　また、管理人がオススメする廻田町のスポットも紹介しています。
+        </p>
+
+
+
+        <!-- トップページ用の写真を表示するブロック -->
+        <div class="activity-photo photo-top" style="margin-left: auto; margin-right: auto; display: block;"></div>
+
+        <p>廻田町自治会の活動拠点である金山神社 </p>
+
+        <!-- これまでの活動と歴史 -->
+        <h2>📖 廻田町自治会の歴史と活動</h2>
+        <div class="history-box">
+            <p>廻田町自治会は、長年にわたり地域の皆様の絆を深めるため様々な活動を行ってきました。</p>
+
+            <h3>主な歩み</h3>
+            <ul>
+                <li><strong>昭和40年代:</strong> 人口増加に伴い、自治会の基礎組織が形成される。</li>
+                <li><strong>平成初期:</strong> 金山神社のお祭りと、回田小学校の町民大運動会を毎年開催。</li>
+                <li><strong>令和8年:</strong> 防災活動の強化を目指し「合同防災訓練」を毎年実施。</li>
+            </ul>
+
+            <h3>これまでの主な活動実績</h3>
+            <p>
+                年間を通じた清掃活動、防犯パトロール、グラウンドゴルフなど親睦行事を通じて、安全で暮らしやすい街づくりに貢献しています。特に近年は近隣の多摩湖町、野口町との合同イベントも積極的に開催し、地域の枠を超えた交流も深めています。
+            </p>
+            <ul class="activity-list">
+                <li>
+                    <strong>自治会定期総会の運営:</strong> 地域のコミュニティをより良いものにするため、自治会運営を行っております。写真は会議が開かれる金山神社の集会所です。
+                    <!-- 総会の写真を表示するブロック -->
+                    <div class="activity-photo photo-soukai"></div>
+                </li>
+                <li>
+                    <strong>祭りの運営:</strong> 地域住民の皆様が交流し、楽しめる場として、秋季例大祭などのお祭りを企画・運営しています。
+                    <!-- 祭りの写真を表示するブロック -->
+                    <div class="activity-photo photo-matsuri"></div>
+                </li>
+                <li>
+                    <strong>運動会の開催:</strong> 子どもから高齢者まで、幅広い世代が一緒に参加し親睦を深めることができる「町民大運動会」を毎年開催しています。
+                    <br>　運動会の会場である回田小学校の写真です。
+                    <!-- 運動会の写真を表示するブロック -->
+                    <div class="activity-photo photo-undoukai"></div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- お知らせコーナー -->
+        <h2>📢 最新のお知らせ</h2>
+        <ul class="list-items">
+            <li>
+                <div class="date-badge">2026年4月29日</div>
+                <div class="list-content">
+                    令和８年度　廻田町下自治会定期総会が行われ、昨年度の会務報告と今年度の計画が承認されました。
+                    <!-- 写真掲載スペース -->
+                    <!-- 写真を自分のものに変える時は、srcの中のURLを書き換えます -->
+                    <!--<img src="https://via.placeholder.com/600x300?text=ここに清掃活動の写真などを入れます" alt="清掃活動の様子"
+                        class="news-image">-->
+                </div>
+            </li>
+            <li>
+                <div class="date-badge">2026年4月15日</div>
+                <div class="list-content">春季例大祭では、祈年祭、神明神社祭、戸隠神社祭が行われました</div>
+            </li>
+            <li>
+                <div class="date-badge">2026年3月29日</div>
+                <div class="list-content">歩こう会は、多くの方々にご参加いただきました。目的地の狭山観音は天候にも恵まれ、楽しむことが出来ました。</div>
+            </li>
+        </ul>
+
+        <!-- 年間行事予定コーナー -->
+        <h2>📅 年間行事予定 (2026年度)</h2>
+        <p>今年の主要なイベントスケジュールです。皆様のご参加を心よりお待ちしております。</p>
+        <ul class="list-items">
+            <li>
+                <div class="date-badge">6月7日</div>
+                <div class="list-content"><strong>第８１回環境美化デー及び、防災訓練</strong><br>場所：金山神社など /町内の清掃活動と防災訓練を予定しています。</div>
+            </li>
+            <li>
+                <div class="date-badge">9月12、13日</div>
+                <div class="list-content"><strong>秋季例大祭</strong><br>場所：金山神社 / カラオケ大会と神輿巡行を予定しています。</div>
+            </li>
+            <li>
+                <div class="date-badge">10月18日</div>
+                <div class="list-content"><strong>第54回町民大運動会</strong><br>場所：回田小学校 グラウンド / 玉入れ、リレー、グランドゴルフなどを予定しています。
+                </div>
+            </li>
+            <li>
+                <div class="date-badge">11月中旬</div>
+                <div class="list-content"><strong>東村山市民産業祭り</strong><br>場所：東村山市役所前 / 金山神社から山車をだします！</div>
+            </li>
+            <li>
+                <div class="date-badge">1月1日</div>
+                <div class="list-content"><strong>金山神社にて歳旦祭</strong><br>場所：金山神社 / お焚き上げや、だるまの販売などをしています。</div>
+            </li>
+            <li>
+                <div class="date-badge">3月28日</div>
+                <div class="list-content"><strong>歩こう会</strong><br>場所：金山神社集合 / 金山神社から歩き始めます。</div>
+            </li>
+        </ul>
+
+        <!-- ★変更：過去のお知らせ（アーカイブ）を年度ごとに分ける -->
+        <h2>📦 過去のお知らせ（アーカイブ）</h2>
+        <p style="font-size: 0.9em; color: #666;">見たい年度をクリック（タップ）すると、その年のお知らせが開きます。</p>
+
+        <!-- 2023年度のアーカイブ -->
+        <!-- detailsタグを追加するだけで、各年度ごとの箱をいくつでも作れます -->
+        <details class="archive-box">
+            <summary>📁 2025年度 のお知らせ</summary>
+            <ul class="list-items" style="margin-top: 10px;">
+                <li>
+                    <div class="date-badge">2026年2月22日</div>
+                    <div class="list-content">自主防災研修会（東村山消防署）を行いました。多くの方にご参加いただき、大盛況に終わりました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2026年2月1日</div>
+                    <div class="list-content">第二ブロック合同研修会「廻田町、野口町、多摩湖町」を実施。今年度は、廻田町自治会が担当となり、回田小学校でボッチャの研修会を行いました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2026年1月18日</div>
+                    <div class="list-content">第三回「こどもカフェ」を実施。参加したご家族で【まちをキレイに】のポスターを描きました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2026年1月10日</div>
+                    <div class="list-content">第五分団出初め式を金山神社にて実施しました。地域の安全への意識を高めました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2026年1月1日</div>
+                    <div class="list-content">歳旦祭を、例年通り実施いたしました。御札、お守り、おみくじ、御朱印は大変ご好評いただきました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年12月7日</div>
+                    <div class="list-content">第80回環境美化デーを実施。27カ所の資源回収（総量652kg）と、参加者による生活道路及び、境内の清掃を実施しました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年11月23日</div>
+                    <div class="list-content">七五三祈願祭を、金山神社にて執り行いました。参加したご家族は、とても喜ばれました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年10月19日</div>
+                    <div class="list-content">第53回町民大運動会を実施。子どもから高齢者まで、約300名の方々が競技を行いました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年10月13日</div>
+                    <div class="list-content">東村山市のぐるスポに参加して、ボッチャの体験会を実施。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年9月13、14日</div>
+                    <div class="list-content">秋季例大祭を、金山神社にて執り行いました。カラオケ大会や、神輿巡行で奉納演芸などで盛り上がりました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年6月1日</div>
+                    <div class="list-content">防災訓練（初期消火訓練他）を行いました。初期消火訓練では、消火の仕方を学ぶことが出来ました</div>
+                </li>
+                <li>
+                    <div class="date-badge">2025年4月29日</div>
+                    <div class="list-content">廻田町下自治会定期総会が行われ、令和７年度の予算の執行が承認されました</div>
+                </li>
+            </ul>
+        </details>
+
+        <!-- 2022年度のアーカイブ -->
+        <details class="archive-box">
+            <summary>📁 2024年度 のお知らせ</summary>
+            <ul class="list-items" style="margin-top: 10px;">
+                <li>
+                    <div class="date-badge">2024年3月30日</div>
+                    <div class="list-content">歩こう会を実施しました。高幡不動尊をお参りして、その後は平山城址公園まで歩きました。</div>
+                </li>
+                <li>
+                    <div class="date-badge">2024年2月9日</div>
+                    <div class="list-content">第二ブロック合同研修会「廻田町、野口町、多摩湖町」を実施。今年度、担当の多摩湖町自治会の皆様、ありがとうございました。</div>
+                </li>
+            </ul>
+        </details>
+
+        <!-- 管理人がオススメするスポット -->
+        <h2>✨ 管理人がオススメするスポット</h2>
+        <p>廻田町周辺の魅力的なスポットを管理人が厳選してご紹介します。</p>
+        <div class="horizontal-scroll-container">
+            <div class="horizontal-scroll-item">
+                <div class="list-content">
+                    <strong>廻田公民館（図書館）</strong><br>
+                    　廻田町には図書館が併設されている公民館があります。読書にオススメです。
+
+                    <!-- スポットの写真を表示するブロック -->
+                    <div class="activity-photo" style="background-image: url('PXL_20260517_030000952.MP.jpg');"></div>
+                </div>
+            </div>
+            <!-- あと3つ追加 -->
+            <div class="horizontal-scroll-item">
+                <div class="list-content">
+                    <strong>多摩湖緑地生物観察路</strong><br>
+                    　自然に囲まれた散策路です。森林浴が楽しめます。
+                    <div class="activity-photo" style="background-image: url('PXL_20260517_024927948.MP.jpg');"></div>
+                </div>
+            </div>
+            <div class="horizontal-scroll-item">
+                <div class="list-content">
+                    <strong>村山貯水池</strong><br>
+                    　村山貯水池から廻田町方面を眺めた景色がキレイです。
+                    <div class="activity-photo" style="background-image: url('PXL_20251031_211329201.MP.jpg');"></div>
+                </div>
+            </div>
+            <div class="horizontal-scroll-item">
+                <div class="list-content">
+                    <strong>大和食堂</strong><br>
+                    　廻田町にある町中華屋さんです。地域の方が集まる憩いの場です。
+                    <div class="activity-photo" style="background-image: url('PXL_20260517_043459531.MP.jpg');"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- お問い合わせコーナー -->
+        <h2>📞 お問い合わせ</h2>
+        <div class="contact-box">
+            <p>このホームページは、東村山市廻田町自治会に所属する管理人が個人的に作成したものになります。</p>
+            <p>自治会への新規加入（引っ越してこられた方など）のご相談は、東村山市役所市民協働共生課までお問い合わせください。</p>
+            <p style="font-size: 1.2em; font-weight: bold; color: #2c3e50;">電話: 042-393-5111
+                (内線　市民協働係：3310)平日の8:30〜17:00</p>
+            <p style="font-size: 1.2em; font-weight: bold; color: #2c3e50;">ファクス：042-393-6846</p>
+            <p style="color: #666; font-size: 0.9em; margin-top: 15px;">※ご意見やご質問、お急ぎのご用件は、各班の班長さんへ直接ご相談ください。</p>
+        </div>
+
+        <!-- ページ最下部 -->
+        <footer>
+            <p>&copy; 2026 東村山廻田町自治会. All rights reserved.</p>
+            <p style="font-size: 0.8em; color: #999;">このホームページは廻田町自治会に所属する管理人たくちゃんが運用しています。</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
